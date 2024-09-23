@@ -1,0 +1,78 @@
+/* Apply light green background to the entire page */
+body {
+    background-color: #eaf7f2; /* Light green background */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .plant-search-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #eaf7f2; /* Light background */
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2F8F22; /* Dark green */
+  }
+  
+  .plant-image {
+    width: 150px;
+    height: auto;
+    margin: 1.5rem 0;
+  }
+  
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .plus-btn {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: #2F8F22; /* Dark green */
+    cursor: pointer;
+  }
+  
+  .search-input {
+    border: 2px solid #2F8F22;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    width: 300px;
+  }
+  
+  .send-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .camera-capture {
+    margin: 1.5rem 0;
+  }
+  
+  .camera-label {
+    font-size: 1.2rem;
+    color: #2F8F22;
+    cursor: pointer;
+  }
+  
+  .camera-input {
+    display: none; /* Hide the default file input */
+  }
+  
+  .plant-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  

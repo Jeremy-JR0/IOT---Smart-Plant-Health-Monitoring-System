@@ -1,0 +1,68 @@
+/* MyPlants.css */
+.my-plants-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #eaf7f2;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2F8F22;
+  }
+  
+  .plants-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .plant-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 120px;
+  }
+  
+  .plant-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .add-plant-form {
+    margin-top: 1rem;
+  }
+  
+  .plant-input {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border: 2px solid #2F8F22;
+    border-radius: 25px;
+    font-size: 1rem;
+  }
+  
+  .add-plant-btn {
+    font-size: 2rem;
+    background-color: #2F8F22;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+  
+  .delete-plant-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
