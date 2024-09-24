@@ -9,6 +9,27 @@
 <body>
     <h1>IoT Sensor Data</h1>
     <div id="value-display">Loading...</div>
+
+    <div class="container">
+        <!-- Soil Moisture Display -->
+        <label for="soil-moisture">Current Soil Moisture:</label> 
+        <span id="soil-moisture-value">...</span>
+
+        <!-- Manual Watering Control -->
+        <button id="water-btn" onclick="toggleWaterPump()">Water Plant</button>
+
+        <!-- Automatic Watering Toggle -->
+        <label for="auto-water">Enable Automatic Watering</label>
+        <input type="checkbox" id="auto-water" onchange="toggleAutoWatering(this.checked)">
+
+        <!-- RGB LED Control (On/Off) -->
+        <button id="led-btn" onclick="toggleLED()">Turn On RGB Light</button>
+
+        <!-- Automatic LED Toggle -->
+        <label for="auto-led">Enable Automatic LED Control</label>
+        <input type="checkbox" id="auto-led" onchange="toggleAutoLED(this.checked)">
+    </div>
+
     <script src="JS/readData.js"></script>
 </body>
 </html>
