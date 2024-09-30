@@ -75,4 +75,15 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+  .chat-response {
+    white-space: pre-wrap; /* This ensures new lines and spaces are preserved */
+    word-wrap: break-word; /* Prevents long words from overflowing */
+    max-width: 100%; /* Ensures the content does not overflow horizontally */
+    overflow-y: auto; /* Allows scrolling if the content is too long vertically */
+    max-height: 400px; /* Set a reasonable max height for the chat response */
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
   

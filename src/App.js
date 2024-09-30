@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './Navbar.css';
 import Homepage from './pages/startpage'; // Ensure this matches the actual file name
 import Dashboard from './pages/dashboardpage'; // Ensure this matches the actual file name
+import PlantTimeline from './pages/PlantTimeline'; // Correct file name and path
 import PlantGallery from './pages/PlantGallery'; // Ensure case-sensitivity
 import PlantCareAI from './pages/PlantCareAI'; // Ensure case-sensitivity
 
@@ -15,6 +16,7 @@ function App() {
           <ul>
             <li><Link to="/">Homepage</Link></li>
             <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/plant-timeline">Plantime line</Link></li>
             <li><Link to="/plant-gallery">Plant Gallery</Link></li>
             <li><Link to="/plant-care-ai">Plant Care AI</Link></li>
           </ul>
@@ -23,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/plant-timeline" element={<PlantTimeline />} />
           <Route path="/plant-gallery" element={<PlantGallery />} />
           <Route path="/plant-care-ai" element={<PlantCareAI />} />
         </Routes>

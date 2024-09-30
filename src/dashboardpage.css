@@ -1,78 +1,74 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #ffffff; /* Set background color to white */
-    color: #2F8F22;
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 40pxß;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-  }
-  
-  .dashboard {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 2rem;
-  }
-  
-  .data-section {
-    flex: 1;
-    margin: 0 1rem;
-  }
-  
-  .data-card {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .data-card p {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-  }
-  
-  .buttons {
-    text-align: center;
-    margin: 2rem 0;
-  }
-  
-  .btn {
-    background-color: #2F8F22;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    margin: 0 1rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn:hover {
-    background-color: #1f6b15;
-  }
-  
-  .history {
-    text-align: center;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .history h2 {
-    margin-bottom: 1rem;
-  }
-  
-  .history-record p {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff; /* Set background color to white */
+  color: #2F8F22;
+}
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.data-section {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.data-card {
+  background-color: white;
+  padding: 0.5rem; /* Reduce padding to lower height */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Increase the width */
+  height: auto; /* Adjust height dynamically */
+  max-height: 200px; /* Optionally, you can set a max-height */
+}
+
+.data-card p {
+  margin: 0.5rem 0;
+  font-size: 1 rem;
+  font-weight: bold;
+}
+
+.buttons {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.btn {
+  background-color: #2F8F22;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1f6b15;
+}
+
+.history {
+  text-align: center;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history h2 {
+  margin-bottom: 1rem;
+}
+
+.history-record p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+

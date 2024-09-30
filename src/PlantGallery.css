@@ -1,0 +1,68 @@
+.my-plants-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: #eaf7f2;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2F8F22;
+}
+
+.plants-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.plant-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 150px;
+}
+
+.plant-image {
+  width: 100px; /* 固定宽度 */
+  height: 100px; /* 固定高度 */
+  border-radius: 50%; /* 圆形头像 */
+  object-fit: cover; /* 确保图片适应容器，并保持宽高比 */
+}
+
+.add-plant-form {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.plant-input {
+  padding: 0.5rem;
+  border: 2px solid #2F8F22;
+  border-radius: 25px;
+  font-size: 1rem;
+}
+
+.add-plant-btn {
+  font-size: 2rem;
+  background-color: #2F8F22;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.delete-plant-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

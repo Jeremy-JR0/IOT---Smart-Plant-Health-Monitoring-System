@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import '../dashboardpage.css';
 
@@ -6,32 +5,47 @@ function App() {
   const [dashboardData, setDashboardData] = useState(null);
   const [historyData, setHistoryData] = useState(null);
 
-  // Placeholder for API call to fetch dashboard data
+  // Fetch sensor data from the actual API
   useEffect(() => {
-    // TODO: Replace with actual API call
     const fetchDashboardData = async () => {
-      const data = {
-        basic: {
-          airTemperature: 16,
-          airHumidity: 78,
-          lightBrightness: 1000,
-          waterTankVolume: 20
-        },
-        soil: {
-          soilTemperature: 8,
-          soilHumidity: 30,
-          pH: 7.5,
-          waterRetention: 20
+      const apiUrl = 'https://9wohjilbw6.execute-api.ap-southeast-2.amazonaws.com/data/RetrieveSensorData';
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-      };
-      setDashboardData(data);
+
+        const data = await response.json();
+
+        // Assuming the latest data is the last item in the array
+        const latestData = data[data.length - 1];
+        const dashboardData = {
+          basic: {
+            airTemperature: latestData.payload.temperature,
+            airHumidity: latestData.payload.humidity,
+            lightBrightness: latestData.payload.light_level,
+            waterTankVolume: 20 // Placeholder as it's not available from the sensor data
+          },
+          soil: {
+            soilTemperature: 8, // Placeholder as it's not available from the sensor data
+            soilHumidity: latestData.payload.soil_moisture,
+            pH: latestData.payload.ph_level,
+            waterRetention: 20 // Placeholder as it's not available from the sensor data
+          }
+        };
+
+        setDashboardData(dashboardData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
+
     fetchDashboardData();
   }, []);
 
   // Placeholder for API call to fetch watering history
   useEffect(() => {
-    // TODO: Replace with actual API call
     const fetchHistoryData = async () => {
       const history = [
         { date: '2024/08/31', amount: '150ml' },
@@ -47,10 +61,6 @@ function App() {
 
   return (
     <div className="container">
-      <header className="header">
-        <h1>Andy's Plant Data</h1>
-      </header>
-
       {dashboardData && (
         <div className="dashboard">
           <div className="data-section">

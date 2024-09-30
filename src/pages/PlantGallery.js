@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import './PlantGallery.css'; // Import the CSS file for styling
+import '../PlantGallery.css'; // Import the CSS file for styling
 
 function MyPlants() {
-  const [plants, setPlants] = useState([
-    { id: 1, name: 'Andy', image: 'plant1.png', date: '2023-09-01' },
-    { id: 2, name: 'Bob', image: 'plant2.png', date: '2023-09-02' },
-  ]);
+  const [plants, setPlants] = useState([]);
 
   const [newPlant, setNewPlant] = useState({
     name: '',
@@ -32,16 +29,25 @@ function MyPlants() {
     }
   };
 
-  const handleAddPlant = () => {
+  const handleAddPlant = async () => {
     if (newPlant.name.trim() !== '' && newPlant.date !== '') {
       const plantToAdd = {
         id: newPlant.number,
         name: newPlant.name,
-        image: newPlant.image || 'plant-placeholder.png', // Default to placeholder if no image uploaded
+        image: newPlant.image || 'plant-placeholder.png',
         date: newPlant.date
       };
       setPlants([...plants, plantToAdd]);
       setNewPlant({ name: '', number: plants.length + 2, date: '', image: '' });
+
+      // Call API to save plant in the backend
+      await fetch('/api/plants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(plantToAdd),
+      });
     }
   };
 
@@ -63,7 +69,6 @@ function MyPlants() {
         ))}
       </div>
 
-      {/* Input for adding a new plant */}
       <div className="add-plant-form">
         <input
           type="text"
