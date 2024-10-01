@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../PlantTimeline.css'; // Import the CSS for styling
 
-function PlantTimeline() {
+function PlantTimeline() {  // 确保函数定义完整
   const [images, setImages] = useState({
     day1: '',
     day15: '',
@@ -9,30 +9,24 @@ function PlantTimeline() {
     day45: ''
   });
 
-  // Simulate fetching images from Raspberry Pi's Samba folder
-  useEffect(() => {
-    // Placeholder function to simulate image retrieval
-    const fetchImagesFromSamba = async () => {
-      try {
-        // Placeholder logic for retrieving images from Samba folder on Raspberry Pi
-        // Replace these URLs with actual paths once Samba integration is done
-        setImages({
-          day1: '/path-to-samba/day1-image.jpg',
-          day15: '/path-to-samba/day15-image.jpg',
-          day30: '/path-to-samba/day30-image.jpg',
-          day45: '/path-to-samba/day45-image.jpg'
-        });
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
+  // Fetch images from the shared folder
+ // Fetch images from the shared folder
+const fetchImagesFromFolder = () => {
+  setImages({
+    day1: 'http://localhost:5002/images/0_photo_20241001_193019.jpg',  // 新的 Day 1 图片文件
+    day15: 'http://localhost:5002/images/1_photo_20241001_193025.jpg',  // 新的 Day 15 图片文件
+    day30: 'http://localhost:5002/images/2_photo_20241001_193030.jpg',  // 新的 Day 30 图片文件
+    day45: 'http://localhost:5002/images/3_photo_20241001_193036.jpg'   // 新的 Day 45 图片文件
+  });
+};
 
-    fetchImagesFromSamba();
+  useEffect(() => {
+    fetchImagesFromFolder();
   }, []);
 
   return (
     <div className="timeline-container">
-      <h1>Plant growth timeline</h1>
+      <h1>Plant Growth Timeline</h1>
       <div className="timeline">
         <div className="timeline-item">
           <img src={images.day1} alt="Day 1" className="timeline-image" />

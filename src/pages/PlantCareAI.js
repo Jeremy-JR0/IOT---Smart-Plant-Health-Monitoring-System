@@ -68,7 +68,7 @@ function PlantSearch() {
             'Authorization': `Bearer sk-Ya1lYbp8LYSBosl7WLBiWcaYCBaWCRoRMlABV0UBPubQPghg` // Replace with your actual key
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
             messages: [{ role: "user", content: searchQuery }],
             max_tokens: 500 // Increased token limit to allow for longer responses
           })

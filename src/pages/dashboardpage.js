@@ -28,7 +28,7 @@ function App() {
             waterTankVolume: 20 // Placeholder as it's not available from the sensor data
           },
           soil: {
-            soilTemperature: 8, // Placeholder as it's not available from the sensor data
+            soilTemperature: latestData.soilTemperature, // Placeholder as it's not available from the sensor data
             soilHumidity: latestData.payload.soil_moisture,
             pH: latestData.payload.ph_level,
             waterRetention: 20 // Placeholder as it's not available from the sensor data
