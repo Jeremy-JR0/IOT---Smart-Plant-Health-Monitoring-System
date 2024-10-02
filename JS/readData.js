@@ -56,6 +56,45 @@ function toggleWaterPump(action) {
 }
 
 function toggleRGBLight(action) {
+    fetch('https://lqit46ymn0.execute-api.ap-southeast-2.amazonaws.com/rgb/control', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic: 'rgbLight/control', message: action })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log("RGB light control: ", action))
+    .catch(error => console.error('Error controlling RGB light:', error));
+}
+
+function toggleAutomaticMode(checkbox) {
+    const action = checkbox.checked ? 'automatic' : 'manual';
+    
+    // Disable or enable the manual control buttons
+    document.getElementById('water-on-btn').disabled = checkbox.checked;
+    document.getElementById('water-off-btn').disabled = checkbox.checked;
+
+    fetch('https://lqit46ymn0.execute-api.ap-southeast-2.amazonaws.com/wpc/control', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic: 'waterPump/control', message: action })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log("Water pump mode: ", action))
+    .catch(error => console.error('Error toggling automatic mode:', error));
+}
+
+
+function toggleRGBLight(action) {
     fetch('https://u70oktpbs1.execute-api.ap-southeast-2.amazonaws.com/rgbled/control', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

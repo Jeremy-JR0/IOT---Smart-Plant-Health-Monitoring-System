@@ -17,6 +17,11 @@
     <button id="light-on-btn" onclick="toggleRGBLight('ON')">Turn On RGB Light</button>
     <button id="light-off-btn" onclick="toggleRGBLight('OFF')">Turn Off RGB Light</button>
 
+    <div class="automatic-mode">
+        <input type="checkbox" id="automatic-checkbox" onchange="toggleAutomaticMode(this)">
+        <label for="automatic-checkbox">Automatic Mode For Water Pump</label>
+    </div>
+
     </div>
 
     <script src="JS/readData.js"></script>
