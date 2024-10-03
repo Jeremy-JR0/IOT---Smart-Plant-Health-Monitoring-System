@@ -110,86 +110,19 @@ function toggleRGBLight(action) {
     .catch(error => console.error('Error controlling RGB light:', error));
 }
 
+function calibrateUltrasonicSensor() {
+    fetch('https://lqit46ymn0.execute-api.ap-southeast-2.amazonaws.com/wpc/control', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic: 'waterPump/control', message: 'CALIBRATE' })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log("Calibration command sent"))
+    .catch(error => console.error('Error sending calibration command:', error));
+}
 
-// //==============================================================================================================================================
-// let autoWaterEnabled = false;
-// let autoLEDEnabled = false;
-
-// // Function to toggle manual water pump control
-// function toggleWaterPump() {
-//     fetch('YOUR_AWS_API_GATEWAY_ENDPOINT', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ topic: 'waterPump/control', message: 'ON' })
-//     }).then(response => response.json())
-//       .then(data => console.log("Watering plant manually"));
-// }
-
-// // Function to toggle automatic watering control
-// function toggleAutoWatering(enabled) {
-//     autoWaterEnabled = enabled;
-//     if (enabled) {
-//         console.log("Automatic watering enabled");
-//     } else {
-//         console.log("Automatic watering disabled");
-//     }
-// }
-
-// // Function to toggle manual RGB LED control
-// function toggleLED() {
-//     fetch('YOUR_AWS_API_GATEWAY_ENDPOINT', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ topic: 'plantLight/control', message: JSON.stringify({ color: 'blue', brightness: 100 }) })
-//     }).then(response => response.json())
-//       .then(data => console.log("RGB LED manually turned on"));
-// }
-
-// // Function to toggle automatic LED control
-// function toggleAutoLED(enabled) {
-//     autoLEDEnabled = enabled;
-//     if (enabled) {
-//         console.log("Automatic LED control enabled");
-//     } else {
-//         console.log("Automatic LED control disabled");
-//     }
-// }
-
-// // Function to get sensor data from AWS IoT Core and decide on automatic actions
-// function getSensorData() {
-//     fetch('YOUR_API_ENDPOINT')
-//         .then(response => response.json())
-//         .then(data => {
-//             document.getElementById('soil-moisture-value').innerText = data.soilMoisture;
-
-//             // Automatic watering logic
-//             if (autoWaterEnabled && data.soilMoisture < 400) {  // Replace 400 with your threshold
-//                 console.log("Automatically watering plant based on moisture level");
-
-//                 // Send a POST request to water the plant automatically
-//                 fetch('YOUR_AWS_API_GATEWAY_ENDPOINT', {
-//                     method: 'POST',
-//                     headers: { 'Content-Type': 'application/json' },
-//                     body: JSON.stringify({ topic: 'waterPump/control', message: 'ON' })
-//                 }).then(response => response.json())
-//                   .then(data => console.log("Automatic watering triggered"));
-//             }
-
-//             // Automatic LED control logic
-//             if (autoLEDEnabled && data.lightLevel < 200) {  // Replace 200 with your light level threshold
-//                 console.log("Automatically turning on RGB LED based on light level");
-
-//                 // Send a POST request to turn on the LED automatically
-//                 fetch('YOUR_AWS_API_GATEWAY_ENDPOINT', {
-//                     method: 'POST',
-//                     headers: { 'Content-Type': 'application/json' },
-//                     body: JSON.stringify({ topic: 'plantLight/control', message: JSON.stringify({ color: 'blue', brightness: 100 }) })
-//                 }).then(response => response.json())
-//                   .then(data => console.log("Automatic LED control triggered"));
-//             }
-//         });
-// }
-
-// // Poll for sensor data every 10 seconds
-// setInterval(getSensorData, 10000);
-// //==============================================================================================================================================
