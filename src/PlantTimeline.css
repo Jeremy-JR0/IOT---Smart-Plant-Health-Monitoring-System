@@ -1,59 +1,103 @@
+/* PlantTimeline.css */
+
 .timeline-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.timeline-container h1 {
   text-align: center;
-  padding: 2rem;
-  background-color: #eaf7f2;
-  margin-top: 3rem;
+  font-size: 2.5rem;
+  color: #008036;
+  margin-bottom: 30px;
 }
 
 .timeline {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 2rem 0;
-  position: relative;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #2F8F22;
-  z-index: 0;
+  margin-bottom: 40px;
 }
 
 .timeline-item {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100px;
+  margin: 0 10px;
 }
 
-.timeline-item img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.timeline-image {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #ccc;
 }
 
 .timeline-item p {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #2F8F22;
-  margin-top: 0;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
 }
 
-/* Add styles for the timeline PNG */
+.chart-columns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.chart-column {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-column h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #008036;
+  margin-bottom: 20px;
+}
+
 .timeline-png-container {
-  margin-top: 3rem;
+  margin-top: 40px;
+  text-align: center;
 }
 
 .timeline-png {
-  width: 100%; /* Make the image full width */
+  width: 100%;
+  max-width: 500px;
   height: auto;
-  display: block;
+  border-radius: 10px;
+}
+
+.air-column {
+  background-color: #e8f5e9;
+}
+
+.soil-column {
+  background-color: #ffebee;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .timeline {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeline-item {
+    width: 80px;
+    margin: 20px 0;
+  }
+
+  .chart-columns {
+    flex-direction: column;
+    gap: 30px;
+  }
 }

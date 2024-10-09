@@ -1,54 +1,114 @@
-const fs = require('fs');
-const path = require('path');
 const express = require('express');
+const axios = require('axios');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');  // Import the CORS package
+
+dotenv.config();
+
 const app = express();
+app.use(bodyParser.json());
 
-// 照片文件夹
-const imagesDir = path.join(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE, 'Downloads', 'plant_life_line');
+const baseUrl = 'https://api.deepbricks.ai/v1/chat/completions';
+const apiKey = process.env.OPENAI_API_KEY;
 
-// 读取照片文件，并解析文件名中的时间戳
-const getPhotosWithTimestamps = () => {
-  const files = fs.readdirSync(imagesDir);
-  const photos = {
-    day1: '',
-    day15: '',
-    day30: '',
-    day45: ''
-  };
+const uploadDir = path.join(__dirname, 'uploads');
 
-  files.forEach(file => {
-    const match = file.match(/_(\d{8}_\d{6})\.jpg$/); // 提取时间戳
-    if (match) {
-      const timestamp = match[1];  // 例如 "20241001_193019"
-      const date = new Date(timestamp.slice(0, 4), timestamp.slice(4, 6) - 1, timestamp.slice(6, 8));
-      const now = new Date();  // 当前日期
-      const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));  // 计算天数差
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+    console.log('Created uploads directory');
+} else {
+    console.log('Uploads directory already exists');
+}
 
-      if (diffDays <= 1) {
-        photos.day1 = `/images/${file}`;
-      } else if (diffDays <= 15) {
-        photos.day15 = `/images/${file}`;
-      } else if (diffDays <= 30) {
-        photos.day30 = `/images/${file}`;
-      } else if (diffDays <= 45) {
-        photos.day45 = `/images/${file}`;
-      }
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
     }
-  });
+});
+const upload = multer({ storage: storage });
 
-  return photos;
-};
+app.use('/uploads', express.static(uploadDir));
 
-// 提供静态资源文件夹
-app.use('/images', express.static(imagesDir));
+app.post('/ask', async (req, res) => {
+    const userInput = req.body.question;
+    const body = {
+        model: "gpt-4o-2024-08-06",
+        messages: [{ role: "user", content: userInput }]
+    };
 
-// 获取照片接口
-app.get('/photos', (req, res) => {
-  const photos = getPhotosWithTimestamps();
-  res.json(photos);
+    try {
+        const response = await axios.post(baseUrl, body, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        res.json({ response: response.data });
+    } catch (error) {
+        console.error('Error communicating with third-party API:', error.message);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
-app.listen(5002, () => {
-  console.log('Server is running on http://localhost:5002');
+app.post('/upload', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No image uploaded');
+    }
+
+    const uploadedImage = req.file;
+    console.log('Image uploaded successfully:', uploadedImage);
+
+    res.json({ 
+        message: 'Image uploaded successfully', 
+        imageUrl: `http://localhost:3001/uploads/${uploadedImage.filename}` 
+    });
 });
 
+app.get('/api/images', (req, res) => {
+    fs.readdir(uploadDir, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error reading uploads folder' });
+        }
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file)).sort();
+        res.json(imageFiles);
+    });
+});
+
+app.get('/image/:filename', (req, res) => {
+    const filePath = path.join(uploadDir, req.params.filename);
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Image not found');
+    }
+});
+
+app.listen(3001, () => {
+    console.log("Server is running on http://localhost:3001");
+});
+
+// Configure the image server to allow CORS requests from localhost:3000
+const imageServer = express();
+imageServer.use(cors());  // Enable CORS for all routes
+imageServer.use('/uploads', express.static(uploadDir));
+
+imageServer.get('/api/images', (req, res) => {
+    fs.readdir(uploadDir, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error reading uploads folder' });
+        }
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file)).sort();
+        res.json(imageFiles);
+    });
+});
+
+imageServer.listen(5002, () => {
+    console.log('Image server running on http://localhost:5002');
+});

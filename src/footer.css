@@ -1,0 +1,14 @@
+.footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    background-color:#008036; /* 可根据需要自定义背景色 */
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff; /* 可根据需要自定义字体颜色 */
+  }
+  

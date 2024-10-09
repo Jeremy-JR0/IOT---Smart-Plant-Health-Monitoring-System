@@ -1,68 +1,144 @@
-.my-plants-container {
-  text-align: center;
-  padding: 2rem;
-  background-color: #eaf7f2;
+/* Container for the plant search interface */
+.plant-search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 80px auto; /* Adds top and bottom margin */
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-  font-size: 2rem;
+/* General styling for labels */
+label {
+  font-size: 14px;
   font-weight: bold;
-  color: #2F8F22;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
 }
 
-.plants-grid {
+/* Styling for inputs */
+.text-input,
+.text-area,
+.search-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* Styling specifically for text areas */
+.text-area {
+  resize: vertical;
+  height: 80px;
+}
+
+/* Avatar container to center the avatar and button */
+.avatar-container {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.plant-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 150px;
-}
-
-.plant-image {
-  width: 100px; /* 固定宽度 */
-  height: 100px; /* 固定高度 */
-  border-radius: 50%; /* 圆形头像 */
-  object-fit: cover; /* 确保图片适应容器，并保持宽高比 */
-}
-
-.add-plant-form {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.plant-input {
-  padding: 0.5rem;
-  border: 2px solid #2F8F22;
-  border-radius: 25px;
-  font-size: 1rem;
-}
-
-.add-plant-btn {
-  font-size: 2rem;
-  background-color: #2F8F22;
-  color: white;
-  border: none;
+/* Plant avatar styling */
+.plant-avatar {
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+  margin-bottom: 10px; /* Space between avatar and upload button */
 }
 
-.delete-plant-btn {
-  background-color: red;
+/* Styling for file input (hidden) */
+.avatar-input {
+  display: none;
+}
+
+/* Styling for the avatar upload button */
+.avatar-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #008036;
   color: white;
-  border: none;
-  padding: 0.3rem 0.5rem;
-  margin-top: 0.5rem;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  margin: 10px 0;
+}
+
+/* Submit button styling */
+.submit-btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-btn button {
+  background-color: #008036;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn button:hover {
+  background-color: #45a049;
+}
+
+/* Search bar styling */
+.search-bar {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  width: calc(100% - 20px);
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Nickname, date input, and description input containers */
+.nickname-input,
+.date-input,
+.description-input {
+  width: 100%;
+  margin-bottom: 15px;
 }

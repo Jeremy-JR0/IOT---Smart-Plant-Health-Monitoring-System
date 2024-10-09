@@ -7,7 +7,7 @@ function App() {
       <header className="header">
         <h1>Smart plant care system</h1>
         <p>It's time to water your plant ...</p>
-        <button className="start-button" onClick={() => window.location.href = 'http://localhost:3000/dashboard'}>
+        <button className="start-button" onClick={() => window.location.href = 'http://localhost:3000/plant-gallery'}>
   let's get started
 </button>
       </header>
