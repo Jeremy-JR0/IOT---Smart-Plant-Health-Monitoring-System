@@ -1,198 +1,117 @@
 import React, { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import '../PlantTimeline.css';
 
+// URL for retrieving sensor data
+const apiUrl = 'https://9wohjilbw6.execute-api.ap-southeast-2.amazonaws.com/data/RetrieveSensorData';
+
+// Define sensor metrics
+const metrics = [
+    { key: 'temperature', label: 'Air Temperature (°C)', color: '#FF5722' },
+    { key: 'humidity', label: 'Air Humidity (%)', color: '#4CAF50' },
+    { key: 'light_level', label: 'Light Level (lux)', color: '#FFC107' },
+    { key: 'soil_humidity', label: 'Soil Humidity (%)', color: '#FF9800' },
+    { key: 'soil_temp', label: 'Soil Temperature (°C)', color: '#673AB7' },
+    { key: 'soil_ph', label: 'Soil pH', color: '#F44336' },
+    { key: 'soil_conductivity', label: 'Soil Conductivity (μS/cm)', color: '#9C27B0' },
+    { key: 'soil_N', label: 'Soil Nitrogen (mg/kg)', color: '#03A9F4' },
+    { key: 'soil_phosphorus', label: 'Soil Phosphorus (mg/kg)', color: '#8BC34A' },
+    { key: 'soil_potassium', label: 'Soil Potassium (mg/kg)', color: '#FFEB3B' }
+];
+
+// Component to display image timeline
 function PlantTimeline() {
-  const [images, setImages] = useState([]);
-  const [sensorData, setSensorData] = useState([]);
+    const [images, setImages] = useState([]);
 
-  // Function to fetch image file names from the server
-  const fetchImagesFromFolder = async () => {
-    try {
-      const response = await fetch('http://localhost:5002/api/images');
-      const data = await response.json();
-      // Convert file names to URLs
-      const imageUrls = data.map(fileName => `http://localhost:5002/uploads/${fileName}`);
-      setImages(imageUrls);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
-
-  const fetchSensorData = async () => {
-    try {
-      const response = await fetch('https://9wohjilbw6.execute-api.ap-southeast-2.amazonaws.com/data/RetrieveSensorData');
-      const data = await response.json();
-      // Ensure data is properly structured as an array of objects
-      const parsedData = data.map(item => ({
-        time: new Date(item.timestamp).toLocaleTimeString(),
-        air: {
-          temperature: item.temperature,
-          humidity: item.humidity,
-          brightness: item.light_level
-        },
-        soil: {
-          moisture: item.soil_moisture,
-          temperature: item.soil_temp,
-          ph: item.soil_ph,
-          conductivity: item.soil_conductivity,
-          nitrogen: item.soil_nitrogen,
-          phosphorus: item.soil_phosphorus,
-          potassium: item.soil_potassium
+    // Function to fetch images from the server
+    const fetchImagesFromFolder = async () => {
+        try {
+            const response = await fetch('http://localhost:5002/api/images');
+            const data = await response.json();
+            const imageUrls = data.map(fileName => `http://localhost:5002/uploads/${fileName}`);
+            setImages(imageUrls);
+        } catch (error) {
+            console.error("Error fetching images:", error);
         }
-      }));
-      setSensorData(parsedData);
-    } catch (error) {
-      console.error("Error fetching sensor data:", error);
-    }
-  };
+    };
 
-  useEffect(() => {
-    fetchImagesFromFolder();
-    fetchSensorData();
-    const interval = setInterval(() => {
-      fetchSensorData();
-    }, 7200000); // 2 hours
+    useEffect(() => {
+        fetchImagesFromFolder();
+    }, []);
 
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="timeline-container">
-      <h1>Plant Timeline</h1>
-      <div className="timeline">
-        {images.map((imageUrl, index) => (
-          <div className="timeline-item" key={index}>
-            <img src={imageUrl} alt={`Day ${index + 1}`} className="timeline-image" />
-            <p>{`DAY ${index + 1}`}</p>
-          </div>
-        ))}
-      </div>
-      <div className="chart-columns">
-        {/* Column for Air Data */}
-        <div className="chart-column air-column">
-          <h2>Air Data</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="air.brightness" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="air.temperature" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="air.humidity" stroke="#ff7300" />
-            </LineChart>
-          </ResponsiveContainer>
+    return (
+        <div className="plant-timeline">
+            <h2>Plant Image Timeline</h2>
+            <div className="image-container">
+                {images.map((url, index) => (
+                    <div key={index} className="timeline-item">
+                        <img src={url} alt={`Plant Day ${index + 1}`} className="plant-image" />
+                        <p>Day {index + 1}</p>
+                    </div>
+                ))}
+            </div>
         </div>
-
-        {/* Column for Soil Data */}
-        <div className="chart-column soil-column">
-          <h2>Soil Data</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.moisture" stroke="#8884d8" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.temperature" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.ph" stroke="#ff7300" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.conductivity" stroke="#ffc658" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.nitrogen" stroke="#d2691e" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.phosphorus" stroke="#228B22" />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="soil.potassium" stroke="#B22222" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div className="timeline-png-container">
-        <img src="/timeline.png" alt="Timeline" className="timeline-png" />
-      </div>
-    </div>
-  );
+    );
 }
 
-export default PlantTimeline;
+// Main App component
+const App = () => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const result = await response.json();
+                setData(result);
+                setLoading(false);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError('Error loading data. Please try again later.');
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    return (
+        <div className="App">
+
+            {/* Plant Timeline Component */}
+            <PlantTimeline />
+
+            {/* Charts for sensor data */}
+            <main>
+                {loading && <div id="loading">Loading data...</div>}
+                {error && <div className="error">{error}</div>}
+                {!loading && !error && metrics.map(metric => (
+                    <section key={metric.key} className="chart-section">
+                        <h2>{metric.label}</h2>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={data.map(record => ({
+                                timestamp: record.timestamp ? new Date(record.timestamp).toLocaleString() : 'N/A',
+                                value: parseFloat(record.payload?.[metric.key] || null)
+                            }))}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="timestamp" />
+                                <YAxis />
+                                <Tooltip />
+                                <Line type="monotone" dataKey="value" stroke={metric.color} strokeWidth={2} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </section>
+                ))}
+            </main>
+
+            {/* Timeline PNG at the bottom */}
+            <div className="timeline-png-container">
+                <img src="/timeline.png" alt="Timeline" className="timeline-png" />
+            </div>
+        </div>
+    );
+};
+
+export default App;
