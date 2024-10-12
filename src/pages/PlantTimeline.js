@@ -23,10 +23,25 @@ function PlantTimeline() {
     try {
       const response = await fetch('https://9wohjilbw6.execute-api.ap-southeast-2.amazonaws.com/data/RetrieveSensorData');
       const data = await response.json();
-      setSensorData(prevData => [...prevData, ...data.map(item => ({
-        ...item,
-        time: new Date(item.timestamp).toLocaleTimeString()
-      }))]);
+      // Ensure data is properly structured as an array of objects
+      const parsedData = data.map(item => ({
+        time: new Date(item.timestamp).toLocaleTimeString(),
+        air: {
+          temperature: item.temperature,
+          humidity: item.humidity,
+          brightness: item.light_level
+        },
+        soil: {
+          moisture: item.soil_moisture,
+          temperature: item.soil_temp,
+          ph: item.soil_ph,
+          conductivity: item.soil_conductivity,
+          nitrogen: item.soil_nitrogen,
+          phosphorus: item.soil_phosphorus,
+          potassium: item.soil_potassium
+        }
+      }));
+      setSensorData(parsedData);
     } catch (error) {
       console.error("Error fetching sensor data:", error);
     }
@@ -53,15 +68,12 @@ function PlantTimeline() {
           </div>
         ))}
       </div>
-      {/* Two columns: One for Air data, one for Soil data */}
       <div className="chart-columns">
         {/* Column for Air Data */}
         <div className="chart-column air-column">
           <h2>Air Data</h2>
-          
-          {/* Brightness Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.light_level}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -71,9 +83,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Temperature Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.temperature}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -83,9 +94,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Humidity Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.humidity}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -99,10 +109,8 @@ function PlantTimeline() {
         {/* Column for Soil Data */}
         <div className="chart-column soil-column">
           <h2>Soil Data</h2>
-          
-          {/* Moisture Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_temp}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -112,9 +120,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Temperature Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_humidity}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -124,9 +131,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* pH Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_ph}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -136,9 +142,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Nutrient1 Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_conductivity}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -148,9 +153,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Nutrient2 Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_nitrogen}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -160,9 +164,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Nutrient3 Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_phosphorus}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -172,9 +175,8 @@ function PlantTimeline() {
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Nutrient4 Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={sensorData.soil_potassium}>
+            <LineChart data={sensorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
               <YAxis />
@@ -186,7 +188,6 @@ function PlantTimeline() {
         </div>
       </div>
 
-      {/* Add the timeline PNG at the bottom */}
       <div className="timeline-png-container">
         <img src="/timeline.png" alt="Timeline" className="timeline-png" />
       </div>

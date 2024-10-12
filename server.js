@@ -5,18 +5,18 @@ const dotenv = require('dotenv');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const cors = require('cors');  // Import the CORS package
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all routes
 
 const baseUrl = 'https://api.deepbricks.ai/v1/chat/completions';
 const apiKey = process.env.OPENAI_API_KEY;
 
 const uploadDir = path.join(__dirname, 'uploads');
-
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
     console.log('Created uploads directory');
@@ -36,6 +36,7 @@ const upload = multer({ storage: storage });
 
 app.use('/uploads', express.static(uploadDir));
 
+// Chat completion endpoint
 app.post('/ask', async (req, res) => {
     const userInput = req.body.question;
     const body = {
@@ -57,6 +58,7 @@ app.post('/ask', async (req, res) => {
     }
 });
 
+// Upload image endpoint
 app.post('/upload', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).send('No image uploaded');
@@ -71,6 +73,22 @@ app.post('/upload', upload.single('image'), (req, res) => {
     });
 });
 
+// Another upload image endpoint
+app.post('/upload01', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No image uploaded');
+    }
+
+    const uploadedImage = req.file;
+    console.log('Image uploaded successfully:', uploadedImage);
+
+    res.json({ 
+        message: 'Image uploaded successfully', 
+        imageUrl: `http://localhost:3001/upload01/${uploadedImage.filename}` 
+    });
+});
+
+// List all uploaded images
 app.get('/api/images', (req, res) => {
     fs.readdir(uploadDir, (err, files) => {
         if (err) {
@@ -81,6 +99,7 @@ app.get('/api/images', (req, res) => {
     });
 });
 
+// Serve individual images by filename
 app.get('/image/:filename', (req, res) => {
     const filePath = path.join(uploadDir, req.params.filename);
     if (fs.existsSync(filePath)) {
@@ -90,13 +109,14 @@ app.get('/image/:filename', (req, res) => {
     }
 });
 
+// Start the main server
 app.listen(3001, () => {
     console.log("Server is running on http://localhost:3001");
 });
 
-// Configure the image server to allow CORS requests from localhost:3000
+// Configure a separate image server with CORS enabled
 const imageServer = express();
-imageServer.use(cors());  // Enable CORS for all routes
+imageServer.use(cors());
 imageServer.use('/uploads', express.static(uploadDir));
 
 imageServer.get('/api/images', (req, res) => {
