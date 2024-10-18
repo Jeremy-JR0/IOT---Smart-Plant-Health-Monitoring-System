@@ -10,7 +10,7 @@ function PlantSearch() {
   const [cameraError, setCameraError] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
 
-  // 控制相机的函数
+
   const toggleCamera = (action) => {
     fetch('https://u70oktpbs1.execute-api.ap-southeast-2.amazonaws.com/rgbled/control', {
       method: 'POST',
@@ -19,11 +19,9 @@ function PlantSearch() {
     }).catch(error => console.error('Error controlling camera:', error));
   };
 
-  // 从 uploads 文件夹获取最新照片并上传检测
   const handleTakePhoto = async () => {
-    toggleCamera('ON'); // 启动相机拍摄
+    toggleCamera('ON'); 
     try {
-      // 获取 uploads 目录中的照片文件列表
       const response = await fetch('http://localhost:5002/api/images');
       if (!response.ok) {
         throw new Error('Failed to fetch image list from uploads');
@@ -32,10 +30,9 @@ function PlantSearch() {
       if (data.length === 0) {
         throw new Error('No images found in uploads');
       }
-      // 获取最新（按时间排序后第一个）图片
       const latestImage = data[data.length - 1];
       const imageUrl = `http://localhost:5002/uploads/${latestImage}`;
-      setUploadedImage(imageUrl); // 显示获取到的照片
+      setUploadedImage(imageUrl); 
       setCameraError('');
 
       const imgResponse = await fetch(imageUrl);
@@ -45,11 +42,10 @@ function PlantSearch() {
       console.error('Error accessing photo:', error);
       setCameraError('Unable to access photos. Please check connection.');
     } finally {
-      toggleCamera('OFF'); // 拍摄完成后关闭相机
+      toggleCamera('OFF'); 
     }
   };
 
-  // 上传照片到植物健康状态检测 API
   const identifyPlant = async (blob) => {
     const formData = new FormData();
     formData.append('images', blob, 'photo.jpg');
