@@ -159,7 +159,6 @@ function Dashboard() {
       })
       .then(data => {
         console.log('Calibration command sent');
-        // Optionally, you can set a temporary state to indicate calibration is in progress
       })
       .catch(error => console.error('Error sending calibration command:', error));
   };

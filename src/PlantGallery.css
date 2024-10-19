@@ -1,144 +1,150 @@
 /* Container for the plant search interface */
 .plant-search-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 600px;
-  margin: 80px auto; /* Adds top and bottom margin */
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex; /* Enables flex layout */
+  flex-direction: column; /* Aligns items vertically */
+  align-items: center; /* Centers content horizontally */
+  max-width: 600px; /* Sets the maximum width of the container */
+  margin: 80px auto; /* Centers the container with top/bottom margin */
+  padding: 20px; /* Adds padding inside the container */
+  background-color: #f5f5f5; /* Sets a light gray background */
+  border-radius: 10px; /* Rounds the corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
 }
 
-/* General styling for labels */
+/* General styling for form labels */
 label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
-  color: #333;
+  font-size: 14px; /* Sets font size */
+  font-weight: bold; /* Makes the text bold */
+  margin-bottom: 5px; /* Adds space below labels */
+  display: block; /* Displays labels as block elements */
+  color: #333; /* Sets text color to dark gray */
 }
 
-/* Styling for inputs */
+/* General input styling */
 .text-input,
 .text-area,
 .search-input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
-  font-size: 14px;
+  width: 100%; /* Sets full width for inputs */
+  padding: 8px; /* Adds padding inside the input */
+  border-radius: 5px; /* Rounds the corners */
+  border: 1px solid #ccc; /* Adds a light gray border */
+  margin-bottom: 15px; /* Adds space below inputs */
+  font-size: 14px; /* Sets font size */
 }
 
 /* Styling specifically for text areas */
 .text-area {
-  resize: vertical;
-  height: 80px;
+  resize: vertical; /* Allows vertical resizing */
+  height: 80px; /* Sets default height */
 }
 
-/* Avatar container to center the avatar and button */
+/* Container to center the avatar and button */
 .avatar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 15px;
+  display: flex; /* Enables flex layout */
+  flex-direction: column; /* Aligns items vertically */
+  align-items: center; /* Centers items horizontally */
+  margin-bottom: 15px; /* Adds space below the container */
 }
 
-/* Plant avatar styling */
+/* Styling for the plant avatar */
 .plant-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 10px; /* Space between avatar and upload button */
+  width: 80px; /* Sets fixed width */
+  height: 80px; /* Sets fixed height */
+  border-radius: 50%; /* Makes the avatar circular */
+  margin-bottom: 10px; /* Adds space below the avatar */
 }
 
 /* Styling for file input (hidden) */
 .avatar-input {
-  display: none;
+  display: none; /* Hides the file input element */
 }
 
 /* Styling for the avatar upload button */
 .avatar-label {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #008036;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 10px;
+  display: inline-block; /* Displays the button as inline-block */
+  padding: 10px 20px; /* Adds padding around the button */
+  background-color: #008036; /* Sets green background color */
+  color: white; /* Sets text color to white */
+  border-radius: 5px; /* Rounds the corners */
+  cursor: pointer; /* Changes cursor to pointer */
+  font-size: 14px; /* Sets font size */
+  text-align: center; /* Centers text */
+  margin-top: 10px; /* Adds space above the button */
 }
 
-/* Modal styling */
+/* Modal overlay styling */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed; /* Fixes the modal overlay in the viewport */
+  top: 0; /* Stretches the overlay to the top */
+  left: 0; /* Stretches the overlay to the left */
+  right: 0; /* Stretches the overlay to the right */
+  bottom: 0; /* Stretches the overlay to the bottom */
+  background-color: rgba(0, 0, 0, 0.5); /* Adds semi-transparent black background */
+  display: flex; /* Enables flex layout */
+  justify-content: center; /* Centers the modal horizontally */
+  align-items: center; /* Centers the modal vertically */
 }
 
+/* Modal content styling */
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  text-align: center;
+  background-color: white; /* Sets white background for modal */
+  padding: 20px; /* Adds padding inside the modal */
+  border-radius: 10px; /* Rounds the corners */
+  width: 80%; /* Sets width to 80% of the parent */
+  max-width: 500px; /* Sets maximum width */
+  text-align: center; /* Centers text inside the modal */
 }
 
+/* Heading inside the modal content */
 .modal-content h2 {
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Adds space below the heading */
 }
 
+/* Paragraphs inside the modal content */
 .modal-content p {
-  margin: 10px 0;
+  margin: 10px 0; /* Adds vertical space around paragraphs */
 }
 
-/* Submit button styling */
+/* Container for the submit button */
 .submit-btn {
-  text-align: center;
-  margin-top: 20px;
+  text-align: center; /* Centers the submit button */
+  margin-top: 20px; /* Adds space above the container */
 }
 
+/* Styling for the submit button */
 .submit-btn button {
-  background-color: #008036;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+  background-color: #008036; /* Sets green background color */
+  color: white; /* Sets text color to white */
+  padding: 10px 20px; /* Adds padding inside the button */
+  border: none; /* Removes border */
+  border-radius: 5px; /* Rounds the corners */
+  cursor: pointer; /* Changes cursor to pointer */
+  font-size: 16px; /* Sets font size */
 }
 
+/* Hover effect for the submit button */
 .submit-btn button:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Sets darker green on hover */
 }
 
-/* Search bar styling */
+/* Container for the search bar */
 .search-bar {
-  width: 100%;
-  margin-bottom: 15px;
+  width: 100%; /* Sets full width for the search bar */
+  margin-bottom: 15px; /* Adds space below the search bar */
 }
 
+/* Styling for the search input */
 .search-input {
-  width: calc(100% - 20px);
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  width: calc(100% - 20px); /* Sets width to fill container minus padding */
+  padding: 8px; /* Adds padding inside the input */
+  border-radius: 5px; /* Rounds the corners */
+  border: 1px solid #ccc; /* Adds a light gray border */
 }
 
-/* Nickname, date input, and description input containers */
+/* Containers for nickname, date, and description inputs */
 .nickname-input,
 .date-input,
 .description-input {
-  width: 100%;
-  margin-bottom: 15px;
+  width: 100%; /* Sets full width for the containers */
+  margin-bottom: 15px; /* Adds space below each container */
 }
